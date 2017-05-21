@@ -1,6 +1,6 @@
 <?php
 $db = new PDO("mysql:hostname=localhost;dbname=friends_mf","root","");
-$query ="SELECT * FROM `customers`";
+$query ="SELECT * FROM `customers` LEFT JOIN accounts ON customers.id=accounts.customer_id";
 $stmt = $db->query($query);
 $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -21,12 +21,31 @@ $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </td>
 </table>
 <br/>
-<table>
+<table border="2px">
     <thead>
     <tr>
        <th>Name</th>
+       <th>Account No</th>
+       <th>Total Amount Of money</th>
+       <th>Action</th>
     </tr>
     </thead>
+    <tbody>
+    <?php
+        foreach ($customers as $customer) {
+            ?>
+            <tr>
+                <td><?=$customer['first_name']." ".$customer['last_name']?></td>
+                <td><?=$customer['account_no']?></td>
+                <td><?=$customer['total_money']?> BDT</td>
+                <td><a href="adminPanel/customers/edit.php">Edit</a> | <a href="adminPanel/customers/view.php">View</a>
+                    | <a href="adminPanel/customers/delete.php">Delete</a>
+                </td>
+            </tr>
+            <?php
+        }
+    ?>
+    </tbody>
 </table>
 </body>
 </html>

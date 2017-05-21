@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2017 at 06:18 PM
+-- Generation Time: May 21, 2017 at 10:49 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -30,16 +30,17 @@ CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `account_no` varchar(50) NOT NULL,
-  `total_money` double NOT NULL,
-  `loans` varchar(255) NOT NULL
+  `total_money` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `customer_id`, `account_no`, `total_money`, `loans`) VALUES
-(7, 14, '789456', 150000, 'No Loan');
+INSERT INTO `accounts` (`id`, `customer_id`, `account_no`, `total_money`) VALUES
+(7, 14, '789456', 150000),
+(8, 15, '145698', 5000),
+(9, 16, '0583620', 2000);
 
 -- --------------------------------------------------------
 
@@ -68,8 +69,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `first_name`, `last_name`, `user_name`, `father_name`, `mother_name`, `gender`, `date_birth`, `nid`, `address`, `contact`, `mail`, `password`) VALUES
-(13, 'abul', 'kalam', 'abul.kalam', 'karim mia', 'sokhina bibi', 'male', '12/04/1988', '65465465', 'address address address address', '0125478', 'abul@gmail.com', '123456'),
-(14, 'abul', 'kalam', 'abul34.kalam', 'karim mia', 'sokhina bibi', 'male', '12/04/1988', '65465465', 'address address address address', '0125478', 'abul@gmail.com', '123456');
+(14, 'abul', 'kalam', 'abul34.kalam', 'karim mia', 'sokhina bibi', 'male', '12/04/1988', '65465465', 'address address address address', '0125478', 'abul@gmail.com', '123456'),
+(15, 'mridul', 'hasan', 'mridul', 'moinul', 'slipi begum', 'male', '10/10/1980', '45654', 'asfasdfdddzsds', '54555111', 'mridul@gmail.com', '456123'),
+(16, 'himel', 'mojumdar', 'himel1', 'rafiq mozumdar', 'aysha khatun', 'male', '18/4/1990', '54564154', 'some address', '017894561', 'himel@gmail.com', '123456');
 
 -- --------------------------------------------------------
 
@@ -79,13 +81,22 @@ INSERT INTO `customers` (`id`, `first_name`, `last_name`, `user_name`, `father_n
 
 CREATE TABLE `loans` (
   `id` int(11) NOT NULL,
-  `loan_name` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `amount` varchar(255) NOT NULL,
   `interest` float NOT NULL,
   `duration` varchar(255) NOT NULL,
-  `loan_id` int(11) NOT NULL,
+  `loan_id` varchar(100) NOT NULL,
   `details` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `loans`
+--
+
+INSERT INTO `loans` (`id`, `name`, `amount`, `interest`, `duration`, `loan_id`, `details`) VALUES
+(2, 'Home Loan', '4000000', 5, '5', 'HL01', 'This is a Home Loan'),
+(3, 'Car Loan', '3000000', 8, '3', 'CL01', 'This is a Car Loan'),
+(4, 'Study', '500000', 1, '8', 'SL01', 'This is Study loan');
 
 -- --------------------------------------------------------
 
@@ -98,6 +109,16 @@ CREATE TABLE `map_account_loans` (
   `accounts_id` int(11) NOT NULL,
   `loans_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `map_account_loans`
+--
+
+INSERT INTO `map_account_loans` (`id`, `accounts_id`, `loans_id`) VALUES
+(1, 8, 2),
+(2, 7, 3),
+(3, 9, 2),
+(8, 9, 3);
 
 -- --------------------------------------------------------
 
@@ -124,7 +145,9 @@ CREATE TABLE `nominee` (
 --
 
 INSERT INTO `nominee` (`id`, `custormer_id`, `first_name`, `last_name`, `father_name`, `mothers_name`, `gender`, `date_birth`, `nid`, `relation_customer`, `contact`) VALUES
-(2, 14, 'saidul', 'islam', 'mokjbul hossen', 'monira akhter', 'male', '12/04/1988', '646546', 'friend', '6465464');
+(2, 14, 'saidul', 'islam', 'mokjbul hossen', 'monira akhter', 'male', '12/04/1988', '646546', 'friend', '6465464'),
+(3, 15, 'shipon', 'hasan', 'moinul', 'shilpi begum', 'male', '22/4/1985', '6546556465', 'Brother', '01235478'),
+(4, 16, 'nishi ', 'mazumdar', 'rafiq mozumdar', 'aysha khatun', 'female', '12/06/1993', '5485415', 'Sister', '654545');
 
 --
 -- Indexes for dumped tables
@@ -155,7 +178,9 @@ ALTER TABLE `loans`
 -- Indexes for table `map_account_loans`
 --
 ALTER TABLE `map_account_loans`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `accounts_id` (`accounts_id`),
+  ADD KEY `loans_id` (`loans_id`);
 
 --
 -- Indexes for table `nominee`
@@ -172,27 +197,27 @@ ALTER TABLE `nominee`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `loans`
 --
 ALTER TABLE `loans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `map_account_loans`
 --
 ALTER TABLE `map_account_loans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `nominee`
 --
 ALTER TABLE `nominee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -202,6 +227,13 @@ ALTER TABLE `nominee`
 --
 ALTER TABLE `accounts`
   ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `map_account_loans`
+--
+ALTER TABLE `map_account_loans`
+  ADD CONSTRAINT `map_account_loans_ibfk_1` FOREIGN KEY (`accounts_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `map_account_loans_ibfk_2` FOREIGN KEY (`loans_id`) REFERENCES `loans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nominee`

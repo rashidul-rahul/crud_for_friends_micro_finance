@@ -24,7 +24,6 @@ $customer = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <h1>Accounts Information for <?=$customer[0]['first_name'].' '.$customer[0]['last_name']?></h1>
 <form action="adminPanel/accounts/create.php" method="post">
     <input type="hidden" name="customer_id" value="<?=$_GET['id']?>">
-    <input type="hidden" name="loan" value="No Loan">
     <table>
         <tr>
             <td><label for="account_number">Account Number: </label></td>

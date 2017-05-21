@@ -68,5 +68,3 @@ $customer = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </form>
 </body>
 </html>
-<?php
-echo $_GET['id'];

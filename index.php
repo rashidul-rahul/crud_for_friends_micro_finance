@@ -14,5 +14,7 @@
                 <th><a href="adminPanel/assignLoans.php">Assign Loan</th>
             </td>
         </table>
+    <br/>
+    <h2>Welcome</h2>
     </body>
 </html>
