@@ -38,7 +38,7 @@ $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?=$customer['first_name']." ".$customer['last_name']?></td>
                 <td><?=$customer['account_no']?></td>
                 <td><?=$customer['total_money']?> BDT</td>
-                <td><a href="adminPanel/customers/edit.php">Edit</a> | <a href="adminPanel/customers/view.php">View</a>
+                <td><a href="adminPanel/customers/edit.php">Edit</a> | <a href="adminPanel/customers/view.php?id=<?=$customer['customer_id'];?>">View</a>
                     | <a href="adminPanel/customers/delete.php">Delete</a>
                 </td>
             </tr>

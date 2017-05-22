@@ -1,6 +1,6 @@
 <?php
 $db = new PDO("mysql:hostname=localhost;dbname=friends_mf","root","");
-$query = "SELECT customers.first_name, customers.last_name, accounts.id, accounts.account_no, accounts.total_money, loans.id, loans.name FROM `customers` LEFT JOIN accounts ON customers.id = accounts.customer_id LEFT JOIN map_account_loans ON accounts.id = map_account_loans.accounts_id LEFT JOIN loans ON map_account_loans.loans_id = loans.id";
+$query = "SELECT customers.first_name, customers.last_name, accounts.id as account_id, accounts.account_no, accounts.total_money, loans.id, loans.name FROM `customers` LEFT JOIN accounts ON customers.id = accounts.customer_id LEFT JOIN map_account_loans ON accounts.id = map_account_loans.accounts_id LEFT JOIN loans ON map_account_loans.loans_id = loans.id";
 $stmt = $db->query($query);
 $customerAndLoans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -46,7 +46,7 @@ $customerAndLoans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?=$customerAndLoan['account_no']?></td>
             <td><?=$customerAndLoan['total_money']?> BDT</td>
             <td><?=$customerAndLoan['name']?></td>
-            <td><a href="adminPanel/accounts/edit.php">Edit</a> | <a href="adminPanel/accounts/view.php">View</a>
+            <td><a href="adminPanel/accounts/edit.php">Edit</a> | <a href="adminPanel/accounts/view.php?id=<?=$customerAndLoan['account_id']?>">View</a>
                 | <a href="adminPanel/accounts/delete.php">Delete</a>
             </td>
         </tr>
